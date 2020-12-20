@@ -59,7 +59,7 @@ public class PdfSplitPerPage {
     private String getFileName(Pattern regexFileName, String contentFile) {
         Matcher m = regexFileName.matcher(contentFile);
         if (m.find()) {
-            return m.group();
+            return m.group().trim();
         }
 
         return UUID.randomUUID().toString();
