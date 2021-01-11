@@ -5,7 +5,7 @@ import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
 import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
 import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import jdk.nashorn.internal.runtime.regexp.joni.Regex;
 
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
@@ -57,12 +57,15 @@ public class PdfSplitPerPage {
     }
 
     private String getFileName(Pattern regexFileName, String contentFile) {
+        String result;
         Matcher m = regexFileName.matcher(contentFile);
         if (m.find()) {
-            return m.group().trim();
+            result = m.group().trim();
         }
 
-        return UUID.randomUUID().toString();
+        result = UUID.randomUUID().toString();
+
+        return result.replaceAll("[^0-9]", "");
     }
 
     private void generateTextFile(String pathFile, String contentFile) {
