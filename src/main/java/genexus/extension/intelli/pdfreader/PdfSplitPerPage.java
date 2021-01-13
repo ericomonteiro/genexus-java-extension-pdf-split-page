@@ -57,15 +57,12 @@ public class PdfSplitPerPage {
     }
 
     private String getFileName(Pattern regexFileName, String contentFile) {
-        String result;
         Matcher m = regexFileName.matcher(contentFile);
         if (m.find()) {
-            result = m.group().trim();
+            return m.group().trim().replaceAll("[^0-9]", "");
         }
 
-        result = UUID.randomUUID().toString();
-
-        return result.replaceAll("[^0-9]", "");
+        return UUID.randomUUID().toString();
     }
 
     private void generateTextFile(String pathFile, String contentFile) {
